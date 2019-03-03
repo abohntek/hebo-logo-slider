@@ -1,0 +1,44 @@
+/**
+ * #.# Editor Styles
+ *
+ * CSS for just Backend enqueued after style.scss
+ * which makes it higher in priority.
+ */
+
+.wp-block-hebo-logo-slider {
+	display: flex;
+	flex-wrap: wrap;
+
+	button {
+		margin-top: 10px;
+	}
+
+	.hebo__logo-slider-add-slide {
+		margin: 10px;
+		font-size: 70px;
+
+		&:before {
+			cursor: pointer;
+		}
+	}
+
+	.hebo__logo-slider-block {
+		margin: 20px;
+		width: 100px;
+		min-height: 70px;
+	}
+
+	.hebo__logo-slider-slide {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.hebo__logo-slider-logo {
+		max-width: 100%;
+	}
+
+	.hebo__logo-slider-rm-logo {
+		cursor: pointer;
+		margin-left: 90px;
+	}
+}
