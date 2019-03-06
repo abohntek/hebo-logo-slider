@@ -35,6 +35,13 @@ function hebo_logo_slider_cgb_block_assets() { // phpcs:ignore
 		null
 	);
 
+	// Register slick styles for logo slider
+	wp_enqueue_style(
+		'slick-style-theme',
+		plugins_url('dist/vendor/slick-theme.css', dirname( __FILE__ ) ),
+		null
+	);
+
 	// Register script for logo slider
 	wp_enqueue_script(
 		'slick-script',
