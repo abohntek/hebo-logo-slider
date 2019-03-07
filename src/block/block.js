@@ -61,23 +61,14 @@ const attributes = {
 				selector: 'img',
 				default: '',
 			},
-			id: {
-				source: 'attribute',
-				selector: 'img',
-				attribute: 'data-id',
-			},
 			index: {
-				source: "text"
+				type: 'string',
+				source: 'attribute',
+				attribute: 'data-slide-index'
 			},
         }
     }
 }
-
-export const pickRelevantMediaFiles = ( image ) => {
-	const imageProps = pick( image, [ 'alt', 'id', 'link' ] );
-	imageProps.url = get( image, [ 'sizes', 'large', 'url' ] ) || get( image, [ 'media_details', 'sizes', 'large', 'source_url' ] ) || image.url;
-	return imageProps;
-};
 
 /**
  * Register: aa Gutenberg Block.
@@ -112,7 +103,6 @@ registerBlockType( 'hebo/logo-slider', {
 	 */
 	edit({ attributes, className, setAttributes }) {
 		const { slides } = attributes;
-
 		const addSlide = () => {
 			setAttributes({
 				slides: [
@@ -132,9 +122,8 @@ registerBlockType( 'hebo/logo-slider', {
 						<span class="hebo__logo-slider-rm-logo dashicons dashicons-no" onClick={ () => {
 							const newLogo = Object.assign({}, logo, {
 								url: '',
-								alt: '',
-								id: null
-							})
+								alt: ''
+							});
 							setAttributes({
 								slides:
 								[
@@ -143,7 +132,7 @@ registerBlockType( 'hebo/logo-slider', {
 									),
 									newLogo
 								]
-							})
+							});
 						} }></span>
 						<img
 							src={ logo.url }
@@ -182,8 +171,7 @@ registerBlockType( 'hebo/logo-slider', {
 							onSelect = { media => {
 								const newLogo = Object.assign({}, logo, {
 									url: media.url,
-									alt: media.alt,
-									id: media.id
+									alt: media.alt
 								})
 								setAttributes({
 									slides: [
@@ -195,7 +183,7 @@ registerBlockType( 'hebo/logo-slider', {
 							} }
 							type = "image"
 							allowedTypes={ ALLOWED_MEDIA_TYPES }
-							value = { logo.id }
+							value = { logo.url }
 							render = { ( { open } ) => getImageButton(open, logo) }
 						/>
 					</div>
@@ -225,12 +213,11 @@ registerBlockType( 'hebo/logo-slider', {
 	save({ attributes }) {
 		const { slides, id } = attributes;
 		const slideList = slides
-		.filter(item => item.url)
 		.map(
 			slide => {
 				return (
-					<div className="logo-item">
-						<img src={slide.url} />
+					<div className="logo-item" data-slide-index={slide.index}>
+						<img src={slide.url} alt={slide.alt} />
 					</div>
 				)
 			}
@@ -239,6 +226,6 @@ registerBlockType( 'hebo/logo-slider', {
 			<section className="variable-width slider" id={ id }>
 				{ slideList }
 			</section>
-		)
+		);
 	},
 } );
