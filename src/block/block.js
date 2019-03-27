@@ -27,7 +27,7 @@
  */
 const { __ } = wp.i18n; // Import __() from wp.i18n
 const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.blocks
-const { MediaUpload, InspectorControls } = wp.editor;
+const { MediaUpload, InspectorControls, URLInputButton } = wp.editor;
 const { Fragment } = wp.element;
 const { Button } = wp.components;
 
