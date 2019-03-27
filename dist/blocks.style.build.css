@@ -9,15 +9,15 @@
  *
  * CSS for both Frontend+Backend.
  */
-.slider {
+.wp-block-hebo-logo-slider.slider {
   width: auto;
   margin: 30px 30px 50px; }
-  .slider .logo-item {
+  .wp-block-hebo-logo-slider.slider .logo-item {
     padding: 15px 30px; }
-  .slider img {
+  .wp-block-hebo-logo-slider.slider img {
     height: 80px;
     width: auto; }
-  .slider .slick-slide {
+  .wp-block-hebo-logo-slider.slider .slick-slide {
     padding: 40px 0; }
 
 .slick-prev:before,

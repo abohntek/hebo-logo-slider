@@ -66,6 +66,13 @@ const attributes = {
 				source: 'attribute',
 				attribute: 'data-slide-index'
 			},
+			logoLink: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'a',
+				attribute: 'href',
+				default: ''
+			}
         }
     }
 }
@@ -122,7 +129,8 @@ registerBlockType( 'hebo/logo-slider', {
 						<span class="hebo__logo-slider-rm-logo dashicons dashicons-no" onClick={ () => {
 							const newLogo = Object.assign({}, logo, {
 								url: '',
-								alt: ''
+								alt: '',
+								logoLink: ''
 							});
 							setAttributes({
 								slides:
@@ -138,6 +146,21 @@ registerBlockType( 'hebo/logo-slider', {
 							src={ logo.url }
 							className="hebo__logo-slider-logo"
 							onClick={ openEvent }
+						/>
+						<URLInputButton
+							url={ logo.logoLink }
+							onChange={ url => {
+								const newLogo = Object.assign({}, logo, {
+									logoLink: url
+								})
+								setAttributes( {
+									slides: [
+										...slides
+										.filter(item => item.index != logo.index),
+										newLogo
+									]
+								} )
+							} }
 						/>
 					</Fragment>
 				)
@@ -211,13 +234,26 @@ registerBlockType( 'hebo/logo-slider', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	save({ attributes }) {
+		const logoMarkup = (slide) => {
+			if(slide.logoLink) {
+				return(
+					<a href={ slide.logoLink } target="_blank" rel="noopener noreferrer">
+						<img src={ slide.url } alt={ slide.alt } />
+					</a>
+				)
+			} else {
+				return(
+					<img src={slide.url} alt={slide.alt} />
+				)
+			}
+		};
 		const { slides, id } = attributes;
 		const slideList = slides
 		.map(
 			slide => {
 				return (
 					<div className="logo-item" data-slide-index={slide.index}>
-						<img src={slide.url} alt={slide.alt} />
+						{ logoMarkup(slide) }
 					</div>
 				)
 			}
